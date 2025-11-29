@@ -70,9 +70,10 @@ app.post('/register' , async(req,res) =>{
         
 
         res.cookie("token", token, {
-    // httpOnly: true,     // prevents JS access → secure
-    // secure: true,       // only on https (enable in production)
-    // sameSite: "strict", // prevents CSRF
+    httpOnly: true,
+    secure: true,              // MUST be true in production
+    sameSite: "none",          // allow cross-domain cookies
+    path: "/",
     maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
 });
      
@@ -118,9 +119,10 @@ app.post('/login' , async(req,res) =>{
         const token = jwt.sign(data, process.env.JWT_SECRET , {expiresIn : process.env.JWT_EXPIRE}) ;
 
         res.cookie("token", token, {
-    // httpOnly: true,     // prevents JS access → secure
-    // secure: true,       // only on https (enable in production)
-    // sameSite: "strict", // prevents CSRF
+    httpOnly: true,
+    secure: true,              // MUST be true in production
+    sameSite: "none",          // allow cross-domain cookies
+    path: "/",
     maxAge: 30 * 24 * 60 * 60 * 1000 // 7 days
 });
      
