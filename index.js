@@ -26,7 +26,7 @@ const auth = require("./auth");
 // body parse
 // connection 
 
-console.log(require('crypto').randomBytes(32).toString('hex'))
+// console.log(require('crypto').randomBytes(32).toString('hex'))
     try {
      mongoose.connect(process.env.URI) ;
     console.log("db connected successfully") ;

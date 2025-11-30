@@ -11,8 +11,13 @@ const todoSchema = new mongoose.Schema({
         required  : true
     } , 
     files : [{
-        name : String ,
-        password : String ,
+        name : { type : String , required : true },
+
+        password : {
+            iv :      { type : String , required : true },
+            content : { type : String , required : true },
+            tag :     { type : String , required : true }
+        }
     }] ,
         
 } , {timestamps : true   })
