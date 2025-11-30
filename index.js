@@ -191,17 +191,23 @@ app.get("/" , async(req,res) => {
     
 })
 
-// app.post("/deleteTodo" , async(req,res) => {
-//     const _id = req.body._id ;
-//     try {
-//         await Todos.updateOne({_id : _id} , {todoStatus : true})
-//         return res.json({msg : "update successful"}) ;
-//     }
-//     catch(err) {
-//         return res.status(400).json({msg : "something went wrong"}) ;
-//     }
+app.post("/deleteTodo" , async(req,res) => {
+    const fileId = req.body.id;  // <-- id of password entry inside files[]
+    const user  = req._id;       // <-- current logged in user id/name
+
+    try {
+        await Todos.updateOne(
+            { name: user },               // match user document
+            { $pull: { files: { _id: fileId } } } // remove only 1 password entry
+        );
+        return res.json({ msg: "Password deleted successfully" });
+    }
+    catch(err) {
+        console.log(err);
+        return res.status(400).json({ msg: "Something went wrong" });
+    }
     
-// } )
+} )
 
 // app.get("/deleteAll" , async(req,res) => {
 //     try {
