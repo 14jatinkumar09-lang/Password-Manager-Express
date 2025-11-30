@@ -182,7 +182,7 @@ app.get("/" , async(req,res) => {
     if(!allTodos) {
         return res.status(400).json({msg:"somethingn went wrong"})
     }
-    allTodos.files = allTodos.files.map(file => decrypt(file)) ;
+    allTodos.files = allTodos.files.map(file => decrypt(file.password)) ;
         res.json({todos : allTodos.files})
     
     
