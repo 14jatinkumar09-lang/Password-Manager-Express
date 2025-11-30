@@ -7,6 +7,7 @@ const cors = require("cors") ;
 const bcrypt = require('bcrypt')
 const app = express() ;
 const jwt = require('jsonwebtoken')
+const { encrypt, decrypt } = require("../utils/encryption");
 app.use(cookieParser());
 
 
@@ -158,8 +159,12 @@ app.post("/addTodo" , auth ,  async(req, res) => {
         return res.status(400).json({msg : "Password already exist with this name"})
     }
 
+    const encrypted = encrypt(body.password) ;
+
+
+
     try {
-        user.files.push(req.body) ;
+        user.files.push({name : body.name , password : encrypted}) ;
     await user.save() ;
 
     // console.log("Password Saved Successfully") ;
@@ -177,9 +182,9 @@ app.get("/" , async(req,res) => {
     if(!allTodos) {
         return res.status(400).json({msg:"somethingn went wrong"})
     }
-    else {
+    allTodos.files = allTodos.files.map(file => decrypt(file)) ;
         res.json({todos : allTodos.files})
-    }
+    
     
 })
 
