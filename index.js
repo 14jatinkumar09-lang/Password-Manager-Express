@@ -7,7 +7,7 @@ const cors = require("cors") ;
 const bcrypt = require('bcrypt')
 const app = express() ;
 const jwt = require('jsonwebtoken')
-const { encrypt, decrypt } = require("../utils/encryption");
+const { encrypt, decrypt } = require('./utils/encryption.js');
 app.use(cookieParser());
 
 
@@ -26,7 +26,7 @@ const auth = require("./auth");
 // body parse
 // connection 
 
-
+console.log(require('crypto').randomBytes(32).toString('hex'))
     try {
      mongoose.connect(process.env.URI) ;
     console.log("db connected successfully") ;

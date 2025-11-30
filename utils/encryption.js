@@ -1,8 +1,8 @@
 const crypto = require("crypto");
 
 const ALGO = "aes-256-gcm"; // Authenticated encryption
+// console.log(require('crypto').randomBytes(32).toString('hex'))
 const KEY = Buffer.from(process.env.ENCRYPTION_KEY, "hex"); // 32 bytes
-
 function encrypt(plainText) {
   const iv = crypto.randomBytes(12); // 96-bit nonce for GCM
   const cipher = crypto.createCipheriv(ALGO, KEY, iv);
