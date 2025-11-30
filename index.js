@@ -176,9 +176,9 @@ res.json({msg:"Password Saved Successfully"}) ;
 
 }) ;
 
-app.get("/" , async(req,res) => {
+app.get("/" , auth , async(req,res) => {
     
-    const allTodos = await Todos.findOne({name : req._id}) ;
+    const allTodos = await Todos.findOne({_id : req._id}) ;
     if(!allTodos) {
         return res.status(400).json({msg:"somethingn went wrong"})
     }
