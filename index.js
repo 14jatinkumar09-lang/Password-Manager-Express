@@ -165,6 +165,7 @@ app.post("/addTodo" , auth ,  async(req, res) => {
 
     try {
         user.files.push({name : body.name , password : encrypted}) ;
+        console.log("RAW DB DATA:", user.files);
     await user.save() ;
 
     // console.log("Password Saved Successfully") ;
@@ -176,28 +177,33 @@ res.json({msg:"Password Saved Successfully"}) ;
 
 }) ;
 
-app.get("/" , auth , async(req,res) => {
-    
-    const allTodos = await Todos.findOne({_id : req._id}) ;
-    if(!allTodos) {
-        return res.status(400).json({msg:"somethingn went wrong"})
-    }
-    allTodos.files = allTodos.files.map(file => ({
-    ...file.toObject(),
-    password: decrypt(file.password)
-}));
-        res.json({todos : allTodos.files})
-    
-    
-})
+app.get("/", auth, async (req,res) => {
+    const user = await Todos.findOne({_id : req._id});
+    if(!user) return res.status(400).json({msg:"something went wrong"});
+console.log("RAW DB DATA:", user.files);
 
-app.post("/deleteTodo" , async(req,res) => {
+    const decryptedFiles = user.files.map(file => {
+        
+        //  console.log("Decrypt Input:", file.password); // should log iv/content/tag
+    
+    return {
+        name: file.name,
+        password: decrypt(file.password) ,
+        _id : file._id
+    }
+
+    });
+
+    res.json({ todos: decryptedFiles });
+});
+
+app.post("/deleteTodo", auth , async(req,res) => {
     const fileId = req.body.id;  // <-- id of password entry inside files[]
-    const user  = req._id;       // <-- current logged in user id/name
+    const userId  = req._id;       // <-- current logged in user id/name
 
     try {
         await Todos.updateOne(
-            { name: user },               // match user document
+            { _id: userId },               // match user document
             { $pull: { files: { _id: fileId } } } // remove only 1 password entry
         );
         return res.json({ msg: "Password deleted successfully" });
