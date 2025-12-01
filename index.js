@@ -7,11 +7,12 @@ const cors = require("cors") ;
 const bcrypt = require('bcrypt')
 const app = express() ;
 const jwt = require('jsonwebtoken')
+import path from "path" ;
 const { encrypt, decrypt } = require('./utils/encryption.js');
 app.use(cookieParser());
 
-
- app.use(cors({
+app.use(express.static(path.join(__dirname, 'client/dist')));
+app.use(cors({
   origin: process.env.FRONTEND_URL , //'https://todo-frontend-react-production.vercel.app'
 //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
