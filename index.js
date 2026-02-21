@@ -234,7 +234,7 @@ app.get("/logout" , (req,res) => {
 
 app.get('/authenticate' , auth , (req,res) => {
     return res.json({msg : "authenticated successfully"}) ;
-}) ;
+}) 
 
 
 
