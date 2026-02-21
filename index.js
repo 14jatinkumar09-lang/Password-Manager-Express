@@ -227,6 +227,17 @@ app.post("/deleteTodo", auth , async(req,res) => {
 //     }} )
 
 
+app.get("/logout" , (req,res) => {
+    res.clearCookie("token") ;
+    return res.json({msg : "logged out successfully"}) ;
+})
+
+app.get('/authenticate' , auth , (req,res) => {
+    return res.json({msg : "authenticated successfully"}) ;
+}) ;
+
+
+
 
 app.listen(8000);
 module.exports = app ;
