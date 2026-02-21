@@ -123,7 +123,7 @@ app.post('/login' , async(req,res) =>{
         res.cookie("token", token, {
     httpOnly: true,
     secure: true,              // MUST be true in production
-    sameSite: "true",          // allow cross-domain cookies
+    sameSite: "none",          // allow cross-domain cookies
     path: "/",
     maxAge: 30 * 24 * 60 * 60 * 1000 // 7 days
 });
