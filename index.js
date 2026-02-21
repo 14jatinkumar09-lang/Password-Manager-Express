@@ -74,7 +74,7 @@ app.post('/register' , async(req,res) =>{
         res.cookie("token", token, {
     httpOnly: true,
     secure: true,              // MUST be true in production
-    sameSite: "none",          // allow cross-domain cookies
+    sameSite: "lax",          // allow cross-domain cookies
     path: "/",
     maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
 });
@@ -123,7 +123,7 @@ app.post('/login' , async(req,res) =>{
         res.cookie("token", token, {
     httpOnly: true,
     secure: true,              // MUST be true in production
-    sameSite: "none",          // allow cross-domain cookies
+    sameSite: "lax",          // allow cross-domain cookies
     path: "/",
     maxAge: 30 * 24 * 60 * 60 * 1000 // 7 days
 });
